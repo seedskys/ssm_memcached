@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">   
+<!-- 务必配置正确namespace就是所映射的接口类-->   
+<mapper namespace="IUserDao">    
+<!-- resultType="User"这个使用的是配置文件里面的别名（配置文件为mybatis-config.xml） -->   
+<select id="getUser" parameterType="string" resultType="User">           
+    select * from user where name=#{name}     
+</select>   
+</mapper>   

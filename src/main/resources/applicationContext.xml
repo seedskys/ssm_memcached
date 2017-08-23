@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans                
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd               
+       http://www.springframework.org/schema/context                
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">  
+       
+        
+       
+      <context:component-scan base-package="com.test.server"/>
+       <context:component-scan base-package="com.test.dao"/>
+        
+      <context:annotation-config />  
+        
+    <!-- 获取JDBC连接属性 -->  
+    <context:property-placeholder location="classpath:jdbc.properties" />  
+    <!-- 配置数据源 -->  
+    
+    
+    <bean id="dataSource"  
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>  
+        <property name="url" value="${jdbc.url}">  
+        </property>  
+    </bean>  
+    
+    
+    <!-- sqlSessionFactory -->  <!-- MyBatis在spring中Bean的配置，都是固定的 -->  
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="configLocation" value="classpath:mybatis-config.xml" />  
+        <property name="dataSource" ref="dataSource" />  
+    </bean>  
+    
+    
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">  
+        <constructor-arg index="0" ref="sqlSessionFactory" />  
+    </bean>  
+    
+    
+    <!-- 引入memcached配置文件 -->  
+    <import resource="spring-memcached.xml"/>  
+    
+    <!-- <bean id="memcache" class="com.whalin.MemCached.SockIOPool"  
+        factory-method="getInstance" init-method="initialize" destroy-method="shutDown">  
+		<constructor-arg>  
+            <value>memcache</value>  
+        </constructor-arg>
+        <property name="servers">  
+            <list>  
+                <value>127.0.0.1:11211</value>  
+            </list>  
+        </property>  
+        <property name="initConn">  
+            <value>20</value>  
+        </property>  
+        <property name="minConn">  
+            <value>10</value>  
+        </property>  
+        <property name="maxConn">  
+            <value>50</value>  
+        </property>  
+        <property name="maintSleep">  
+            <value>3000</value>  
+        </property>  
+        <property name="nagle">  
+            <value>false</value>  
+        </property>  
+        <property name="socketTO">  
+            <value>3000</value>  
+        </property>  
+    </bean>   -->
+    
+    <!-- 
+     #服务器地址
+    memcached.server=172.168.0.55:11211  //本地地址
+    #初始化时对每个服务器建立的连接数目
+    memcached.initConn=20
+    #每个服务器建立最小的连接数
+    memcached.minConn=10
+    #每个服务器建立最大的连接数
+    memcached.maxConn=50
+    #自查线程周期进行工作，其每次休眠时间
+    memcached.maintSleep=3000
+    #Socket的参数，如果是true在写数据时不缓冲，立即发送出去
+    memcached.nagle=false
+    #Socket阻塞读取数据的超时时间
+    memcached.socketTO=3000
+     -->
+    
+    
+    <!-- 配置映射器 -->  
+<!--     <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">  
+        <property name="mapperInterface" value="com.test.dao.IUserDao" />  
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />  
+    </bean>   -->
+    
+    
+     <!-- 为业务逻辑层注入数据的对象 -->  
+  <!--  <bean id="userServer" class="com.test.server.UserServerImpl">  
+        <property name="userDao" ref="userMapper"></property>  
+        <property name="memcachedClient" ref="memcachedClient"></property>  
+    </bean>  
+    
+    
+    <bean id="login" class="com.test.web.LoginController">  
+        <property name="server" ref="userServer"></property>  
+    </bean>  --> 
+ 
+    
+</beans>   

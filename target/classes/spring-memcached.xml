@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:aop="http://www.springframework.org/schema/aop"   
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans     
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+    http://www.springframework.org/schema/context     
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd    
+    http://www.springframework.org/schema/aop     
+    http://www.springframework.org/schema/aop/spring-aop-3.1.xsd    
+    http://www.springframework.org/schema/tx     
+    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">  
+      
+    <!--memcached注入 -->  
+      <bean id="memcachedPool" class="com.danga.MemCached.SockIOPool"  
+        factory-method="getInstance" init-method="initialize" destroy-method="shutDown">  
+		<constructor-arg>  
+            <value>memcachedPool</value>  
+        </constructor-arg>
+        <property name="servers">  
+            <list>  
+                <value>127.0.0.1:11211</value>  
+            </list>  
+        </property>  
+        <property name="initConn">  
+            <value>20</value>  
+        </property>  
+        <property name="minConn">  
+            <value>10</value>  
+        </property>  
+        <property name="maxConn">  
+            <value>50</value>  
+        </property>  
+        <property name="maintSleep">  
+            <value>3000</value>  
+        </property>  
+        <property name="nagle">  
+            <value>false</value>  
+        </property>  
+        <property name="socketTO">  
+            <value>3000</value>  
+        </property>  
+    </bean>  
+    
+    <bean id="memcachedClient" class="com.danga.MemCached.MemCachedClient" >
+		<constructor-arg>
+			<value>memcachedPool</value>
+		</constructor-arg>
+	</bean>
+    
+    <!-- 
+     #服务器地址
+    memcached.server=172.168.0.55:11211  //本地地址
+    #初始化时对每个服务器建立的连接数目
+    memcached.initConn=20
+    #每个服务器建立最小的连接数
+    memcached.minConn=10
+    #每个服务器建立最大的连接数
+    memcached.maxConn=50
+    #自查线程周期进行工作，其每次休眠时间
+    memcached.maintSleep=3000
+    #Socket的参数，如果是true在写数据时不缓冲，立即发送出去
+    memcached.nagle=false
+    #Socket阻塞读取数据的超时时间
+    memcached.socketTO=3000
+     -->
+    
+    
+    
+  <!--   <bean id="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">  
+        <property name="servers" value="127.0.0.1:11211" />  
+        <property name="protocol" value="BINARY" />  
+        <property name="transcoder">  
+            <bean class="net.spy.memcached.transcoders.SerializingTranscoder">  
+                <property name="compressionThreshold" value="1024" />  
+            </bean>  
+        </property>  
+        <property name="opTimeout" value="10" />  
+        <property name="timeoutExceptionThreshold" value="1998" />  
+        <property name="hashAlg">  
+            <value type="net.spy.memcached.DefaultHashAlgorithm">KETAMA_HASH</value>  
+        </property>  
+        <property name="hashAlg" value="KETAMA_HASH"/>  
+        <property name="locatorType" value="CONSISTENT" />  
+        <property name="failureMode" value="Redistribute" />  
+        <property name="useNagleAlgorithm" value="false" />  
+    </bean> -->  
+</beans>  
