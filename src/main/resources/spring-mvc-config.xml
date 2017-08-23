@@ -14,7 +14,7 @@
     <mvc:annotation-driven />              
       
     <!-- 容器加载时 自动扫描所有注解 -->  
-    <context:component-scan base-package="com.test.web.*" />  
+    <context:component-scan base-package="com.test.web" />
       
     <!-- 配置静态资源  -->      
     <mvc:resources mapping="/js/**" location="/js/" />    
