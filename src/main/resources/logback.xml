@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+	<!-- 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+			<!--<charset>UTF-8</charset>-->
+		</encoder>
+	</appender>
+
+	<!-- 全部日志 -->
+	<appender name="ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${webapp.path}/all.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<append>false</append>
+		<prudent>false</prudent>
+	</appender>
+
+	<appender name="event" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${webapp.path}/ip_all.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<append>false</append>
+		<prudent>false</prudent>
+	</appender>
+
+	<!--********************************* logger ********************************* -->
+	<!-- 全部日志打印 -->
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ALL" />
+	</root>
+
+	<logger name="com.yidianyanglao.core.interceptor.RoleInterceptor" level="INFO" additivity="false">
+		<appender-ref ref="event" />
+	</logger>
+
+</configuration>

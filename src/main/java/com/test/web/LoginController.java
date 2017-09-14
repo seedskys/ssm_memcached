@@ -13,7 +13,7 @@ import com.test.server.IUserServer;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller  
-@RequestMapping("/loginController")  
+//@RequestMapping("/loginController")
 public class LoginController  
 {  
 	@Resource(name="server")
